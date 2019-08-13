@@ -34,6 +34,20 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
 
+                        @role('admin')
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Menu Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/kategori">Menu Admin</a>
+                        </li>
+                        @endrole
+
+                        @guest
+                        {{-- --}}
+                        @else
+                        <li class="nav-item">
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
