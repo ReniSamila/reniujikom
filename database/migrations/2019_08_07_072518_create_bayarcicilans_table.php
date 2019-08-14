@@ -15,7 +15,7 @@ class CreateBayarcicilansTable extends Migration
     {
         Schema::create('bayarcicilans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->Integer('kode_cicilan');
+            $table->Integer('kode');
             $table->Integer('kode_kridit');
             $table->date('tanggal_cicilan');
             $table->Integer('jumlah_cicilan');

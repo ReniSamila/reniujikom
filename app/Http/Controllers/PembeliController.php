@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Pembeli;
+use Session;
+use Auth;
 
 class PembeliController extends Controller
 {
@@ -80,6 +82,12 @@ class PembeliController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pembeli = Pembeli::findOrFail($id)->delete();
+        $response = [
+            'success' => true,
+            'data' => $pembeli,
+            'message' => 'Berhasil disimpan'
+        ];
+        return response()->json($response, 200);
     }
 }

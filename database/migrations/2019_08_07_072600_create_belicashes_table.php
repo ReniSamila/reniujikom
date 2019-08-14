@@ -15,8 +15,8 @@ class CreateBelicashesTable extends Migration
     {
         Schema::create('belicashes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->Integer('kode_cash');
-            $table->string('no_ktp_pembeli');
+            $table->Integer('kode');
+            $table->string('no_ktp');
             $table->Integer('kode_motor');
             $table->date('tanggal_cash');
             $table->double('bayar_cash');

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class motor extends Model
 {
-    protected $fillable = ['motor_kode', 'motor_merk', 'motor_type', 'motor_warna_pilihan', 'motor_harga', 'motor_gambar'];
+    protected $fillable = ['kode', 'merk', 'type', 'warna', 'harga', 'gambar'];
 
     public $timestamps = true;
 }

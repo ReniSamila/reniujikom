@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class kriditpaket extends Model
 {
-    protected $fillable = ['kode_paket', 'harga_paket_cash', 'paket_uang_muka', 'paket_jumlah_cicilan', 'paket_bunga', 'paket_nilai_cicilan'];
+    protected $fillable = ['kode', 'harga_cash', 'uang_muka', 'jumlah_cicilan', 'paket_bunga', 'nilai_cicilan'];
 
     public $timestamps = true;
 }

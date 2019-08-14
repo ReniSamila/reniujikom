@@ -15,17 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['register' => false]);
+// Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::group(['prefix' => 'backend','middleware' => ['auth', 'role:admin']], function() {
+Route::group(['prefix' => 'admin','middleware' => ['auth', 'role:admin']], function() {
     Route::get('/', function() {
         return 'hallo';
     });
     
     Route::resource('user', 'UserController');
 });
+
+Route::resource('/admin/motor', 'MotorController');

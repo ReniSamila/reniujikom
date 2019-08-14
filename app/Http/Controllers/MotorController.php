@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Motor;
+use App\motor;
 use Session;
+use Auth;
 
 class MotorController extends Controller
 {
@@ -15,8 +16,8 @@ class MotorController extends Controller
      */
     public function index()
     {
-        $motor = Motor::all();
-        return view('backend.motor.index', compact('motor'));
+        $motor = motor::orderBy('created_at', 'desc')->get();
+        return view('backend.Motor.index', compact('motor'));
     }
 
     /**
@@ -26,7 +27,8 @@ class MotorController extends Controller
      */
     public function create()
     {
-        return view('backend.motor.create');
+        $motor = Motor::all();
+        return view('backend.Motor.create');
     }
 
     /**
@@ -37,15 +39,15 @@ class MotorController extends Controller
      */
     public function store(Request $request)
     {
-        $kategori = new Kategori;
-        $kategori->nama = $request->get('nama');
-        $kategori->slug = str_slug($request->nama);
-        $kategori->save();
+        $motor = new Motor;
+        $motor->nama = $request->get('nama');
+        $motor->slug = str_slug($request->nama);
+        $motor->save();
         Session::flash("flash_notofication", [
             "level" => "success",
             "message" => "Berhasil menyimpan <b>$motor->nama</b>"
         ]);
-        return redirect()->route('kategori.index');
+        return redirect()->route('motor.index');
     }
 
     /**

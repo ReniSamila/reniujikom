@@ -20,7 +20,7 @@ class CreateMotorsTable extends Migration
             $table->string('motor_type');
             $table->string('motor_warna_pilihan');
             $table->Double('motor_harga');
-            $table->longblob('motor_gambar');
+            $table->string('motor_gambar');
             $table->timestamps();
         });
     }
