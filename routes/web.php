@@ -31,3 +31,4 @@ Route::group(['prefix' => 'admin','middleware' => ['auth', 'role:admin']], funct
 });
 
 Route::resource('/admin/motor', 'MotorController');
+Route::resource('/admin/pembeli', 'PembeliController');

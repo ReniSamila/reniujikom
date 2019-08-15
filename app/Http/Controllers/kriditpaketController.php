@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\kriditpaket;
+use Session;
+use Auth;
 
 class kriditpaketController extends Controller
 {
@@ -13,7 +16,8 @@ class kriditpaketController extends Controller
      */
     public function index()
     {
-        //
+        $kriditpaket = kriditpaket::orderBy('created_at', 'desc')->get();
+        return view('backend.kriditpaket.index', compact('kriditpaket'));
     }
 
     /**
@@ -23,7 +27,8 @@ class kriditpaketController extends Controller
      */
     public function create()
     {
-        //
+        $kriditpaket = kriditpaket::all();
+        return view('backend.kriditpaket.create');
     }
 
     /**
@@ -34,7 +39,15 @@ class kriditpaketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $kriditpaket = new kriditpaket;
+        $kriditpaket->nama = $request->get('nama');
+        $kriditpaket->slug = str_slug($request->nama);
+        $kriditpaket->save();
+        Session::flash("flash_notofication", [
+            "level" => "success",
+            "message" => "Berhasil menyimpan <b>$kriditpaket->nama</b>"
+        ]);
+        return redirect()->route('kriditpaket.index');
     }
 
     /**
@@ -56,7 +69,20 @@ class kriditpaketController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kriditpaket = kriditpaket::findOrFail($id)->edit();
+        $kriditpaket->kode = $request->get('kode');
+        $kriditpaket->harga_cash = $request->get('harga_cash');
+        $kriditpaket->uang_muka = $request->get('uang_muka');
+        $kriditpaket->jumlah_cicilan = $request->get('jumlah_cicilan');
+        $kriditpaket->paket_bunga = $request->get('paket_bunga');
+        $kriditpaket->nilai_cicilan = $request->get('nilai_cicilan');
+        $kriditpaket->save();
+        $response = [
+            'success' => true,
+            'data' => $kriditpaket,
+            'message' => 'Berhasil disimpan'
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -68,7 +94,20 @@ class kriditpaketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $kriditpaket = new kriditpaket;
+        $kriditpaket->kode = $request->get('kode');
+        $kriditpaket->harga_cash = $request->get('harga_cash');
+        $kriditpaket->uang_muka = $request->get('uang_muka');
+        $kriditpaket->jumlah_cicilan = $request->get('jumlah_cicilan');
+        $kriditpaket->paket_bunga = $request->get('paket_bunga');
+        $kriditpaket->nilai_cicilan = $request->get('nilai_cicilan');
+        $kriditpaket->save();
+        $response = [
+            'success' => true,
+            'data' => $kriditpaket,
+            'message' => 'Berhasil disimpan'
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -79,6 +118,12 @@ class kriditpaketController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kriditpaket = kriditpaket::findOrFail($id)->delete();
+        $response = [
+            'success' => true,
+            'data' => $kriditpaket,
+            'message' => 'Berhasil disimpan'
+        ];
+        return response()->json($response, 200);
     }
 }

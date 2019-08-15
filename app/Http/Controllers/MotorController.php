@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\motor;
-use Session;
-use Auth;
+use File;
 
 class MotorController extends Controller
 {
@@ -16,8 +15,8 @@ class MotorController extends Controller
      */
     public function index()
     {
-        $motor = motor::orderBy('created_at', 'desc')->get();
-        return view('backend.Motor.index', compact('motor'));
+        $motor = Motor::all();
+        return view('backend.Motor.index', compact('motor'));  
     }
 
     /**
@@ -39,14 +38,25 @@ class MotorController extends Controller
      */
     public function store(Request $request)
     {
-        $motor = new Motor;
-        $motor->nama = $request->get('nama');
-        $motor->slug = str_slug($request->nama);
+        $motor = new Motor();
+        $motor->motor_kode = $request->motor_kode;
+        $motor->motor_merk = $request->motor_merk;
+        $motor->motor_type = $request->motor_type;
+        $motor->motor_warna = $request->motor_warna;
+        $motor->motor_harga = $request->motor_harga;
+        if ($request->hasFile('motor_gambar')) {
+            $file = $request->file('motor_gambar');
+            $path = public_path() .
+                '/assets/img/motor/';
+            $filename = str_random(6) . '_'
+                . $file->getClientOriginalName();
+            $upload = $file->move(
+                $path,
+                $filename
+            );
+            $motor->motor_gambar = $filename;
+        }
         $motor->save();
-        Session::flash("flash_notofication", [
-            "level" => "success",
-            "message" => "Berhasil menyimpan <b>$motor->nama</b>"
-        ]);
         return redirect()->route('motor.index');
     }
 
@@ -72,7 +82,7 @@ class MotorController extends Controller
         $motor = Motor::findOrFail($id)->edit();
         $motor->motor_merk = $request->get('motor_merk');
         $motor->motor_type = $request->get('motor_type');
-        $motor->motor_warna_pilihan = $request->get('motor_warna_pilihan');
+        $motor->motor_warna_pilihan = $request->get('motor_warna');
         $motor->motor_harga = $request->get('motor_harga');
         $motor->motor_gambar = $request->get('motor_gambar');
         $motor->save();
@@ -94,9 +104,10 @@ class MotorController extends Controller
     public function update(Request $request, $id)
     {
         $motor = new Motor;
+        $motor->motor_kode = $request->get('motor_kode');
         $motor->motor_merk = $request->get('motor_merk');
         $motor->motor_type = $request->get('motor_type');
-        $motor->motor_warna_pilihan = $request->get('motor_warna_pilihan');
+        $motor->motor_warna = $request->get('motor_warna');
         $motor->motor_harga = $request->get('motor_harga');
         $motor->motor_gambar = $request->get('motor_gambar');
         $motor->save();

@@ -36,6 +36,9 @@
 
                         @role('admin')
                         <li class="nav-item">
+                                <a class="nav-link" href="{{ route('backend.Motor.index') }}">Motor</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/">Menu Admin</a>
                         </li>
                         <li class="nav-item">

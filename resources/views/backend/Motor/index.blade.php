@@ -1,53 +1,48 @@
 @extends('layouts.app')
-@section('content')
 
-    <div class = "container">
-        <h4>Data Motor</h4>
-        <center>
-        <a href="{{ route ('motor.create') }}" class="btn btn-outline-primary">Tambah Data</a>
-        </center>
-        <p></p>
-       <table class ="table table-hover table-dark">
-            <thead>
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Halaman motor Berita</div>
+                <br>
+                <center><a href="{{ route('motor.create') }}" class="btn btn-primary">Tambah</a></center>
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>No</th>
+                                <th>motor kode</th>
+                                <th>motor merk</th>
+                                <th>motor type</th>
+                                <th>motor warna</th>
+                                <th>motor harga</th>
+                                <th>motor gambar</th>
+                                <th clospan="3" style="text-align: center;">Aksi</th>
+                            </tr>
+                @php $no =1; @endphp
+                @foreach($motor as $data)
                 <tr>
-                <th scope="col">No</th>
-                <th scope="col">Kode</th>
-                <th scope="col">Merk</th>
-                <th scope="col">Type</th>
-                <th scope="col">Warna</th></th>
-                <th scope="col">Harga</th>
-                <th scope="col">Gambar</th>
-                <th colspan="2" class="text-center">Aksi</th>
+                    <td>{{ $no++ }}</td>
+                    <td>{{ $data->motor_kode }}</td>
+                    <td>{{ $data->motor_merk }}</td>
+                    <td>{{ $data->motor_type }}</td>
+                    <td>{{ $data->motor_harga }}</td>
+                    <td><img src="{{ asset('assets/img/motor/'.$data->motor_gambar)}}" width="100"></td>
+                    <td><a href="{{ route('motor.edit', $data->id) }}" class="btn btn-warning">Edit</a></td>
+                    <td><a href="{{ route('motor.show', $data->id) }}" class="btn btn-success">Detail Data</a></td>
+                    <td><form action="{{ route('motor.destroy', $data->id) }}" method="post">
+                    {{ csrf_field() }}
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn -sm btn-danger" type="submit">Hapus Data</button>
+                    </form>
+                    </td>
                 </tr>
-            </thead>
-            @php $no = 1; @endphp
-            @foreach($motor as $data)
-            <tr>
-                <td>{{ $no++ }}</td>
-                <td>{{ $data->judul }}</td>
-                <td><img  src="{{ asset('assets/img/motor/'.$data->foto)}}" width="100%"></td>
-                <td>{!! $data->konten !!}</td>
-                <td>{{ $data->user->name}}</td>
-                <td>{{ $data->motor->nama}}</td>
-                <td>{{ $data->slug }}</td>
-                <td>
-        </tr>
-        <td>
-          <a href="{{ route('motor.edit',$data->id) }}"
-          class="btn btn-outline-info">Edit Data</a>
-        </td>
-        <td>
-          <form action="{{ route('motor.destroy',$data->id) }}" method="post">
-          {{csrf_field()}}
-              <input type="hidden" name="_method" value="DELETE">
-              <button class="btn btn-outline-info" type="submit">
-            Hapus Data
-              </button>
-          </form>
-      </td>
-  </tr>
-@endforeach
-        </tbody>
-    </table>
+                @endforeach
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

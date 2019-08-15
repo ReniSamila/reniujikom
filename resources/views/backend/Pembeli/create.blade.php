@@ -1,11 +1,18 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="container">
-		<div class="row">
-		  <div class="col col-lg-11">
-			  <form action="{{ route('motor.store') }}" method="post" enctype="multipart/form-data">
-			  @csrf
+<div class = "container">
+    <h4>Data Pembeli</h4>
+   <table class ="table table-hover table-dark">
+		<div class="body">
+			<form action="" method="post" class="form-horizontal">
+   
+						<div class="form-group">
+							<label class="control-label col-lg-4">No</label>
+							<div class="col-lg-4">
+								<input type="text" name="Nomor" autofocus required class="form-control" />
+							</div>
+						</div>
 						<div class="form-group">
 						<label class="control-label col-lg-4">Kode Motor</label>
 						<div class="col-lg-4">
@@ -42,15 +49,12 @@
 								<input type="file" required name="gambar" class="form-control" />
 							</div>
 						</div>
-						 <button type="submit" name="Simpan"class="btn btn-md btn-info">
-							 Simpan Data
-						 </button>
-					 </div>
-					 <div class="form-group">
-						 <a href="{{ url('backend/Motor') }}" class="btn btn-outline-info">Kembali</a>
-						</div>
+						<div class="form-actions no-margin-bottom" style="text-align:center;">
+							<input type="submit" value="Simpan" class="btn btn-primary" />
+							&nbsp <input type="delete" value="Delete" class="btn btn-warning" onclick=self.history.back()>
+                        </div>
                     </form>
-	           </div>
-            </div>
-       
+	</div>
+</div>
+</html>
 @endsection

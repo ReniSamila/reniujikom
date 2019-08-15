@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Pembeli;
+use App\pembeli;
 use Session;
 use Auth;
 
@@ -16,7 +16,8 @@ class PembeliController extends Controller
      */
     public function index()
     {
-        //
+        $pembeli = pembeli::orderBy('created_at', 'desc')->get();
+        return view('backend.Pembeli.index', compact('pembeli'));
     }
 
     /**
@@ -26,7 +27,8 @@ class PembeliController extends Controller
      */
     public function create()
     {
-        //
+        $pembeli = Pembeli::all();
+        return view('backend.Pembeli.create');
     }
 
     /**
@@ -37,7 +39,15 @@ class PembeliController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pembeli = new Pembeli;
+        $pembeli->nama = $request->get('nama');
+        $pembeli->slug = str_slug($request->nama);
+        $pembeli->save();
+        Session::flash("flash_notofication", [
+            "level" => "success",
+            "message" => "Berhasil menyimpan <b>$motor->nama</b>"
+        ]);
+        return redirect()->route('pembeli.index');
     }
 
     /**
@@ -59,7 +69,19 @@ class PembeliController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pembeli = pembeli::findOrFail($id)->edit();
+        $pembeli->no_ktp = $request->get('no_ktp');
+        $pembeli->nama_pembeli = $request->get('nama_pembeli');
+        $pembeli->alamat_pembeli = $request->get('alamat_pembeli');
+        $pembeli->telpon_pembeli = $request->get('telpon_pembeli');
+        $pembeli->pembeli_hp = $request->get('pembeli_hp');
+        $pembeli->save();
+        $response = [
+            'success' => true,
+            'data' => $pembeli,
+            'message' => 'Berhasil disimpan'
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -71,7 +93,19 @@ class PembeliController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $pembeli = new pembeli;
+        $pembeli->no_ktp = $request->get('no_ktp');
+        $pembeli->nama_pembeli = $request->get('nama_pembeli');
+        $pembeli->alamat_pembeli = $request->get('alamat_pembeli');
+        $pembeli->telpon_pembeli = $request->get('telpon_pembeli');
+        $pembeli->pembeli_hp = $request->get('pembeli_hp');
+        $pembeli->save();
+        $response = [
+            'success' => true,
+            'data' => $pembeli,
+            'message' => 'Berhasil disimpan'
+        ];
+        return response()->json($response, 200);
     }
 
     /**

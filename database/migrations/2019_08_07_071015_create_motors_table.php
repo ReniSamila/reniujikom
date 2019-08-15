@@ -18,7 +18,7 @@ class CreateMotorsTable extends Migration
             $table->Integer('motor_kode');
             $table->string('motor_merk');
             $table->string('motor_type');
-            $table->string('motor_warna_pilihan');
+            $table->string('motor_warna');
             $table->Double('motor_harga');
             $table->string('motor_gambar');
             $table->timestamps();
